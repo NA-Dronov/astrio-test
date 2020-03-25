@@ -5,7 +5,7 @@ SELECT
     `name`
 FROM
     `department` AS `d`
-LEFT JOIN `worker` AS `w`
+INNER JOIN `worker` AS `w`
 ON
     `d`.`id` = `w`.`department_id`
 GROUP BY

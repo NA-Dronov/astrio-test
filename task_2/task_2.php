@@ -42,6 +42,7 @@ try {
         $faker = Faker\Factory::create();
         // Department
         db_query($pdo, "TRUNCATE TABLE `department`");
+
         $department_statement = db_get_seed_statement($pdo, 'department');
 
         $created_departments = [];
@@ -66,7 +67,7 @@ try {
         }
     }
 
-    $five_or_more_workers_statement = "SELECT `name` FROM `department` as `d` LEFT JOIN `worker` as `w` ON `d`.`id` = `w`.`department_id` GROUP BY `d`.`id` HAVING COUNT(`w`.`id`) > 5";
+    $five_or_more_workers_statement = "SELECT `name` FROM `department` as `d` INNER JOIN `worker` as `w` ON `d`.`id` = `w`.`department_id` GROUP BY `d`.`id` HAVING COUNT(`w`.`id`) > 5";
     $five_or_more_workers = $pdo->prepare($five_or_more_workers_statement);
     $five_or_more_workers->execute();
 
@@ -85,5 +86,7 @@ try {
     echo '</pre>';
 } catch (Throwable $ex) {
     echo 'ERROR: ' . $ex->getMessage();
+} finally {
+    $pdo = null;
     die();
 }
