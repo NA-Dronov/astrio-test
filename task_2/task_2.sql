@@ -17,7 +17,7 @@ HAVING
 */
 SELECT
     `d`.`name`,
-    GROUP_CONCAT(`w`.`id` SEPARATOR ',') AS `worker_ids`
+    IFNULL(GROUP_CONCAT(`w`.`id` SEPARATOR ','), '') AS `worker_ids`
 FROM
     `department` AS `d`
 LEFT JOIN `worker` AS `w`

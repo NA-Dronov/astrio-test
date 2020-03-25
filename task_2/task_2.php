@@ -76,7 +76,7 @@ try {
     print_r($five_or_more_workers->fetchAll(PDO::FETCH_ASSOC));
     echo '</pre>';
 
-    $department_and_workers_statement = "SELECT `d`.`name`, GROUP_CONCAT(`w`.`id` SEPARATOR ',') as `worker_ids` FROM `department` as `d` LEFT JOIN `worker` as `w` ON `d`.`id` = `w`.`department_id` GROUP BY `d`.`id`";
+    $department_and_workers_statement = "SELECT `d`.`name`, IFNULL(GROUP_CONCAT(`w`.`id` SEPARATOR ','), '') as `worker_ids` FROM `department` as `d` LEFT JOIN `worker` as `w` ON `d`.`id` = `w`.`department_id` GROUP BY `d`.`id`";
     $department_and_workers = $pdo->prepare($department_and_workers_statement);
     $department_and_workers->execute();
 
